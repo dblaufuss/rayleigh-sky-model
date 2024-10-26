@@ -1,4 +1,5 @@
 <p style="text-align: center;">
+
 # Rayleigh Sky Model
 Simulaiton of the [rayleigh sky model](https://en.wikipedia.org/wiki/Rayleigh_sky_model) using python.
 
@@ -28,4 +29,5 @@ $\gamma \to$ Angular distance between the Sun and the observed point. Can be exp
 $\gamma = arccos(cos(\theta)cos(\theta_s)+sin(\theta)sin(\theta_s)cos(\varphi-\varphi_s))$
 
 ![Degree of Polarization](dop.gif)
+
 </p>
