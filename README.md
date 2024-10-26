@@ -4,7 +4,7 @@ Simulaiton of the [rayleigh sky model](https://en.wikipedia.org/wiki/Rayleigh_sk
 ### Angle of Polarization (°)
 Angle $\alpha$ of polarization of $\vec{E}$ at any observable point $P$ can be found with:
 
-<p style="text-align: center;">
+<p style="text-align: left;">
 $$\alpha = arctan(\frac{sin(\theta)cos(\theta_s)-cos(\theta)cos(\varphi-\varphi_s)sin(\theta_s)}{sin(\varphi-\varphi_s)sin(\theta_s)})$$
 </p>
 
@@ -22,7 +22,7 @@ $\varphi_s \to$ $\varphi \to$ Angle from $0°$ due north to the sun (same angle 
 ### Degree of Polarization (%)
 The degree of polarized light $\delta$ at any observable point $P$ can be found with:
 
-<p style="text-align: center;">
+<p style="text-align: left;">
 $$\delta = \frac{\delta_{max}sin^2(\gamma)}{1+cos^2(\gamma)}$$
 </p>
 
