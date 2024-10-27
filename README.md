@@ -27,3 +27,6 @@ $\gamma \to$ Angular distance between the Sun and the observed point. Can be exp
 $\gamma = arccos(cos(\theta)cos(\theta_s)+sin(\theta)sin(\theta_s)cos(\varphi-\varphi_s))$
 
 ![Degree of Polarization](dop.gif)
+
+### Sources
+[Image-registration-based solar meridian detection for accurate and robust polarization navigation](https://opg.optica.org/oe/fulltext.cfm?uri=oe-32-2-1357&id=544987)
