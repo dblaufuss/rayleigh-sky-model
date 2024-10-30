@@ -6,7 +6,7 @@ import numpy as np
 import datetime
 
 def gen_rayleigh_model_dop(phi_sun, theta_sun, date, name):
-    theta_range = np.linspace(0, 2*np.pi, 1000)
+    theta_range = np.linspace(0, 2*np.pi, 1080)
     r_range = np.linspace(0, 1, 1000)
     polar_radius, polar_theta = np.meshgrid(r_range, theta_range)
 
@@ -22,10 +22,10 @@ def gen_rayleigh_model_dop(phi_sun, theta_sun, date, name):
     plt.colorbar()
     plt.grid(False)
     plt.axis("off")
-    plt.savefig(f"out\\dop\\{name}.png")
+    plt.savefig(f"out\\dop\\{name}.png", dpi=500)
 
 def gen_rayleigh_model_aop(phi_sun, theta_sun, date, name):
-    theta_range = np.linspace(0, 2*np.pi, 1000)
+    theta_range = np.linspace(0, 2*np.pi, 1080)
     r_range = np.linspace(0, 1, 1000)
     polar_radius, polar_theta = np.meshgrid(r_range, theta_range)
 
@@ -43,7 +43,7 @@ def gen_rayleigh_model_aop(phi_sun, theta_sun, date, name):
     plt.colorbar()
     plt.grid(False)
     plt.axis("off")
-    plt.savefig(f"out\\aop\\{name}.png")
+    plt.savefig(f"out\\aop\\{name}.png", dpi=500)
 
 for h in np.arange(0, 24):
     for m in np.arange(0, 60, 10):
@@ -57,12 +57,8 @@ for h in np.arange(0, 24):
         altitude_sun = np.deg2rad((sunaltaz.alt*u.deg).value)
         theta_sun = np.deg2rad(90) - altitude_sun
 
-        name =  (h)
+        name = f"{h}h{m}m"
 
         print(name)
         gen_rayleigh_model_dop(phi_sun, theta_sun, date, name)
         gen_rayleigh_model_aop(phi_sun, theta_sun, date, name)
-
-
-    
-
