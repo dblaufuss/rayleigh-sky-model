@@ -33,8 +33,5 @@ $\gamma = arccos(cos(\theta)cos(\theta_s)+sin(\theta)sin(\theta_s)cos(\varphi-\v
 
 ![Degree of Polarization](dop.gif)
 
-### Useful Diagram
-![](https://opg.optica.org/getimagev2.cfm?img=b207tmvd7UxyrJbhr7p5kJ3wWdUgOn99%2B5RB0g4bqaM%3D&size=full&uri=oe-32-2-1357-g001)
-
 ### Sources
 [Image-registration-based solar meridian detection for accurate and robust polarization navigation](https://opg.optica.org/oe/fulltext.cfm?uri=oe-32-2-1357&id=544987)
