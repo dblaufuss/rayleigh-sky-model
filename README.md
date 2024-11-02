@@ -33,7 +33,7 @@ $\gamma = arccos(cos(\theta)cos(\theta_s)+sin(\theta)sin(\theta_s)cos(\varphi-\v
 
 ![Degree of Polarization](dop.gif)
 
-# Useful Diagram
+### Useful Diagram
 ![](https://opg.optica.org/getimagev2.cfm?img=b207tmvd7UxyrJbhr7p5kJ3wWdUgOn99%2B5RB0g4bqaM%3D&size=full&uri=oe-32-2-1357-g001)
 
 ### Sources
