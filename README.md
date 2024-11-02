@@ -16,9 +16,9 @@ complimentary to the elevation)
 
 $\varphi \to$ Angle from $0°$ due north to observed point $P$ (same angle as the azimuth)
 
-$\theta_s \to$ Angle from zenith to the sun (angle complimentary to the elevation)
+$\theta_s \to$ Angle from zenith to the sun (angle complimentary to the solar elevation)
 
-$\varphi_s \to$ $\varphi \to$ Angle from $0°$ due north to the sun (same angle as the azimuth)
+$\varphi_s \to$ Angle from $0°$ due north to the sun (same angle as the solar azimuth)
 
 ![Angle of Polarization](aop.gif)
 
