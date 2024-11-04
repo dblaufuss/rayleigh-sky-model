@@ -2,7 +2,6 @@
 Simulaiton of the [rayleigh sky model](https://en.wikipedia.org/wiki/Rayleigh_sky_model) using python.
 
 ### TO-DO
-- Create 3D version of model. Matplotlib may be limiting for this.
 - Figure out the how to minimize warping at very small angles. 
 - Organize code better (maybe turn this into a package?)
 
