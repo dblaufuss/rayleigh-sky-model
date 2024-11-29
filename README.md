@@ -1,10 +1,6 @@
 # Rayleigh Sky Model
 Simulaiton of the [rayleigh sky model](https://en.wikipedia.org/wiki/Rayleigh_sky_model) using python.
 
-### TO-DO
-- Figure out the how to minimize warping at very small angles. 
-- Organize code better (maybe turn this into a package?)
-
 ### Angle of Polarization (°)
 Angle $\alpha$ of polarization of $\vec{E}$ at any observable point $P$ can be found with:
 
@@ -34,3 +30,5 @@ $\gamma = arccos(cos(\theta)cos(\theta_s)+sin(\theta)sin(\theta_s)cos(\varphi-\v
 
 ### Sources
 [Image-registration-based solar meridian detection for accurate and robust polarization navigation](https://opg.optica.org/oe/fulltext.cfm?uri=oe-32-2-1357&id=544987)
+
+[HEMISPHERICAL PROJECTION METHODS](https://ceae.colorado.edu/~amadei/CVEN5768/PDF/NOTES11.pdf)
