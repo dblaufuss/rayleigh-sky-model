@@ -21,38 +21,73 @@ def calculate_aop(theta_sun, phi_sun, theta_observer, phi_observer):
     return np.arctan((np.sin(theta_observer)*np.cos(theta_sun) - np.cos(theta_observer)*np.cos(phi_observer - phi_sun)*np.sin(theta_sun)) 
         / np.sin(phi_observer - phi_sun)*np.sin(theta_sun))
 
-def create_2d_coordinate_set(num_altitude_vals = 90, num_azimuth_vals = 360):
-    altitude_observer, azimuth_observer = np.mgrid[0:np.pi/2:num_altitude_vals+1j, 0:np.pi*2:num_azimuth_vals*1j]
+def create_2d_coordinate_set(num_altitude_vals = 91, num_azimuth_vals = 360):
+    altitude_observer, azimuth_observer = np.mgrid[0:np.pi/2:num_altitude_vals*1j, 0:np.pi*2:num_azimuth_vals*1j]
     return altitude_observer, azimuth_observer
 
-def create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, data, date, cbar_ticks):
+def create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, data, date, cbar_ticks, data_label):
     plt.close("all")
     fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
-    fig.colorbar(ax.pcolormesh(polar_theta, polar_radius, data, cmap="jet", vmin=cbar_ticks[0], vmax=cbar_ticks[-1]), ax=ax, ticks=cbar_ticks)
-    ax.set_title(f"{date.year}/{date.month}/{date.day} - {date.hour}:{date.minute} UTC")
+    #Plot negative azimuth values as the azimuth direction is clockwise but polar plots are counter clockwise
+    fig.colorbar(ax.pcolormesh(-polar_theta, polar_radius, data, cmap="jet", vmin=cbar_ticks[0], vmax=cbar_ticks[-1]), ax=ax, ticks=cbar_ticks).set_label(data_label)
+    fig.suptitle(f"{date.year}/{date.month}/{date.day} - {date.hour}:{date.minute} UTC | AZ: {round(np.rad2deg(phi_sun),2)} EL: {round(np.rad2deg((np.pi/2 - theta_sun)),2)}")
     ax.grid(False)
-    ax.axis("off")
-    ax.scatter(phi_sun, np.tan(np.pi/4 - (np.pi/2 - theta_sun)/2), c="black", s=250, label="Sun", alpha=0.5)
+    #ax.axis("off")
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+    ax.annotate("N", xy=(0,1), xytext=(0,1.08), horizontalalignment="left", verticalalignment="center", arrowprops=dict(facecolor="black",arrowstyle="<|-"))
+    ax.annotate("E", xy=(-np.pi/2,1), xytext=(-np.pi/2,1.08), horizontalalignment="center", verticalalignment="top", arrowprops=dict(facecolor="black",arrowstyle="<|-"))
+    ax.annotate("S", xy=(-np.pi,1), xytext=(-np.pi,1.08), horizontalalignment="right", verticalalignment="center", arrowprops=dict(facecolor="black",arrowstyle="<|-"))
+    ax.annotate("W", xy=(-np.pi*3/2,1), xytext=(-np.pi*3/2,1.08), horizontalalignment="center", verticalalignment="bottom", arrowprops=dict(facecolor="black",arrowstyle="<|-"))
+    ax.scatter(-phi_sun, np.tan(np.pi/4 - (np.pi/2 - theta_sun)/2), c="black", s=250, label="Sun", alpha=0.5)
     ax.legend(loc=3, frameon=False)
+    fig.tight_layout()
+    return fig
+
+def create_multi_plot(phi_sun, theta_sun, date):
+    altitude_observer, phi_observer = create_2d_coordinate_set(728, 2880)
+    theta_observer = np.deg2rad(90) - altitude_observer
+    degree_of_polarization = calculate_dop(theta_sun, phi_sun, theta_observer, phi_observer)
+    angle_of_polarization = calculate_aop(theta_sun, phi_sun, theta_observer, phi_observer)
+    polar_theta = phi_observer
+    polar_radius = np.tan(np.pi/4 - altitude_observer/2)
+    plt.close("all")
+    fig, axis = plt.subplots(1, 2, subplot_kw=dict(projection='polar'))
+    dop_ticks = np.linspace(0,100,5)
+    aop_ticks = np.linspace(-90,90,5)
+    fig.suptitle(f"{date.year}/{date.month}/{date.day} - {date.hour}:{date.minute} UTC | AZ: {round(np.rad2deg(phi_sun),2)} EL: {round(np.rad2deg((np.pi/2 - theta_sun)),2)}")
+    fig.colorbar(axis[0].pcolormesh(-polar_theta, polar_radius, degree_of_polarization*100, cmap="jet", vmin=dop_ticks[0], vmax=dop_ticks[-1]), shrink=0.5, ax=axis[0], ticks=dop_ticks, location="left").set_label("Degree of Polarization (%)")
+    fig.colorbar(axis[1].pcolormesh(-polar_theta, polar_radius, np.rad2deg(angle_of_polarization), cmap="jet", vmin=aop_ticks[0], vmax=aop_ticks[-1]), shrink=0.5, ax=axis[1], ticks=aop_ticks, location="right").set_label("Angle of Polarization (°)")
+    for ax in axis:
+        ax.grid(False)
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+        ax.annotate("N", xy=(0,1), xytext=(0,1.05), horizontalalignment="left", verticalalignment="center")
+        ax.annotate("E", xy=(-np.pi/2,1), xytext=(-np.pi/2,1.05), horizontalalignment="center", verticalalignment="top")
+        ax.annotate("S", xy=(-np.pi,1), xytext=(-np.pi,1.05), horizontalalignment="right", verticalalignment="center")
+        ax.annotate("W", xy=(-np.pi*3/2,1), xytext=(-np.pi*3/2,1.05), horizontalalignment="center", verticalalignment="bottom")
+        ax.scatter(-phi_sun, np.tan(np.pi/4 - (np.pi/2 - theta_sun)/2), c="black", s=250, label="Sun", alpha=0.5)
+        ax.legend(loc=3, frameon=False)
+        fig.tight_layout()
     return fig
 
 def create_2d_plot_dop(phi_sun, theta_sun, date):
-    altitude_observer, phi_observer = create_2d_coordinate_set()
+    altitude_observer, phi_observer = create_2d_coordinate_set(364, 1440)
     theta_observer = np.deg2rad(90) - altitude_observer
     degree_of_polarization = calculate_dop(theta_sun, phi_sun, theta_observer, phi_observer)
     polar_theta = phi_observer
     polar_radius = np.tan(np.pi/4 - altitude_observer/2)
-    return create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, degree_of_polarization, date, np.linspace(0,1,5))
+    return create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, degree_of_polarization*100, date, np.linspace(0,100,5), "Degree of Polarization (%)")
 
 def create_2d_plot_aop(phi_sun, theta_sun, date):
-    altitude_observer, phi_observer = create_2d_coordinate_set()
+    altitude_observer, phi_observer = create_2d_coordinate_set(364, 1440)
     theta_observer = np.deg2rad(90) - altitude_observer
     angle_of_polarization = calculate_aop(theta_sun, phi_sun, theta_observer, phi_observer)
     polar_theta = phi_observer
     polar_radius = np.tan(np.pi/4 - altitude_observer/2)
-    return create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, np.rad2deg(angle_of_polarization), date, np.linspace(-90,90,5))
+    return create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, np.rad2deg(angle_of_polarization), date, np.linspace(-90,90,5), "Angle of Polarization (°)")
 
-def create_3d_coordinate_set(camera_fov):
+def create_3d_coordinate_set():
     altitude_observer, azimuth_observer = np.mgrid[0:np.pi/2:270j, 0:np.pi*2:720j]
     x_observer = np.cos(altitude_observer)*np.cos(azimuth_observer)
     y_observer = np.cos(altitude_observer)*np.sin(azimuth_observer)

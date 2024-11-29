@@ -21,12 +21,15 @@ for h in np.arange(0, 24):
 
         if altitude_sun < 0:
             continue
+        
+        #plot = create_multi_plot(phi_sun, theta_sun, date)
+        #plot.savefig(f"out\\2d\\multi\\{timestamp}.png", dpi=250)
 
         dop_plot = create_2d_plot_dop(phi_sun, theta_sun, date)
         aop_plot = create_2d_plot_aop(phi_sun, theta_sun, date)
-
         aop_plot.savefig(f"out\\2d\\aop\\{timestamp}.png", dpi=250)
         dop_plot.savefig(f"out\\2d\\dop\\{timestamp}.png", dpi=250)
 
+#create_gif("out\\2d\\multi\\", "multi")
 create_gif("out\\2d\\dop\\", "2d_dop")
 create_gif("out\\2d\\aop\\", "2d_aop")
