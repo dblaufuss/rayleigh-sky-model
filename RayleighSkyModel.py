@@ -30,7 +30,7 @@ def create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, data, date, cb
     fig, ax = plt.subplots(subplot_kw=dict(projection='polar'))
     #Plot negative azimuth values as the azimuth direction is clockwise but polar plots are counter clockwise
     fig.colorbar(ax.pcolormesh(-polar_theta, polar_radius, data, cmap="jet", vmin=cbar_ticks[0], vmax=cbar_ticks[-1]), ax=ax, ticks=cbar_ticks).set_label(data_label)
-    fig.suptitle(f"{date.year}/{date.month}/{date.day} - {date.hour}:{date.minute} UTC | AZ: {round(np.rad2deg(phi_sun),2)} EL: {round(np.rad2deg((np.pi/2 - theta_sun)),2)}")
+    fig.suptitle(date.strftime("%m/%d/%Y %H:%M") + f" UTC | AZ: {round(np.rad2deg(phi_sun),2)}° ALT: {round(np.rad2deg((np.pi/2 - theta_sun)),2)}°")
     ax.grid(False)
     #ax.axis("off")
     ax.set_xticklabels([])
@@ -45,7 +45,7 @@ def create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, data, date, cb
     return fig
 
 def create_multi_plot(phi_sun, theta_sun, date):
-    altitude_observer, phi_observer = create_2d_coordinate_set(728, 2880)
+    altitude_observer, phi_observer = create_2d_coordinate_set(182, 720)
     theta_observer = np.deg2rad(90) - altitude_observer
     degree_of_polarization = calculate_dop(theta_sun, phi_sun, theta_observer, phi_observer)
     angle_of_polarization = calculate_aop(theta_sun, phi_sun, theta_observer, phi_observer)
@@ -72,7 +72,7 @@ def create_multi_plot(phi_sun, theta_sun, date):
     return fig
 
 def create_2d_plot_dop(phi_sun, theta_sun, date):
-    altitude_observer, phi_observer = create_2d_coordinate_set(364, 1440)
+    altitude_observer, phi_observer = create_2d_coordinate_set(182, 720)
     theta_observer = np.deg2rad(90) - altitude_observer
     degree_of_polarization = calculate_dop(theta_sun, phi_sun, theta_observer, phi_observer)
     polar_theta = phi_observer
@@ -80,7 +80,7 @@ def create_2d_plot_dop(phi_sun, theta_sun, date):
     return create_2d_plot(polar_radius, polar_theta, phi_sun, theta_sun, degree_of_polarization*100, date, np.linspace(0,100,5), "Degree of Polarization (%)")
 
 def create_2d_plot_aop(phi_sun, theta_sun, date):
-    altitude_observer, phi_observer = create_2d_coordinate_set(364, 1440)
+    altitude_observer, phi_observer = create_2d_coordinate_set(182, 720)
     theta_observer = np.deg2rad(90) - altitude_observer
     angle_of_polarization = calculate_aop(theta_sun, phi_sun, theta_observer, phi_observer)
     polar_theta = phi_observer

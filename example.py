@@ -7,7 +7,7 @@ lon = 77.03653291227445
 #lon = 00.0
 
 for h in np.arange(0, 24):
-    for m in np.arange(0, 60, 10):
+    for m in np.arange(0, 60, 5):
         time = Time(f"2024-9-21 {h}:{m}:00")
         date = time.to_datetime()
         altitude_sun, phi_sun = np.deg2rad(get_solar_coordinates(time, lat, lon))
